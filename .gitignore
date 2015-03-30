@@ -1,0 +1,10 @@
+# Ignore a.out
+*.out
+*.o
+
+# Ignore nodes created in nodes/
+nodes/*
+
+#Ignore the help file
+bpthelp.cpp
+
