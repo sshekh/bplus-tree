@@ -21,10 +21,12 @@ int main() {
       cin >> key >> data;
       tree.insert(key, data);
       fout << key << " " << data << "\n";
-    } else if(type == 1) {
+    } else if(type == 2) {
       cin >> key >> range;
       tree.query(key - range, key + range);
     } else if(type == 4) {
+       cin >> key >> key; 
+    } else if(type == 5) {
         tree.print();
     }
   }
