@@ -1,5 +1,8 @@
 #include "node.hpp"
 #include <utility>
+#include <cstring>
+
+const double EPS = 1e-11;
 
 struct Bptree {
   Bptree() {
@@ -23,20 +26,56 @@ struct Bptree {
       root_node.isLeaf = true;
       root_node.insert(key, dataf);
     } else {
-      node root_node(root);
+      node root_node = *root;
       auto kn = root_node.insert(key, dataf);
       if(kn.first == -1) return;
       nptr newr; newr.open();
-      cerr << "new root = (" << kn.first << "," << newr.fname << "->" << root.fname << "," << kn.second.fname << ")\n";
       node new_rnode(newr);
-      new_rnode.clear();    // it will try to load data from newr, which may push junk in it
       new_rnode.keys.push_back(kn.first); ++new_rnode.k;
       new_rnode.children.push_back(root);
       new_rnode.children.push_back(kn.second);
       root = &new_rnode;
-      for(nptr d : new_rnode.children) cerr << d.fname << " ";
       new_rnode.dump();
     }
+  }
+  void query(double low, double high) {   // print all values x low <= x <= high
+    if(nptr::cnt == 0) return;
+    node nd = *root;
+    while(!nd.isLeaf) {
+      //cerr << "low = " << low << " ";
+      int idx = lower_bound(nd.keys.begin(), nd.keys.end(), low + EPS) - nd.keys.begin();
+      //cerr << nd.This.fname << " " << idx << " -> ";
+      nd = *nd.children[idx + 1];
+      //cerr << "\n";
+    }
+    //cerr << nd.This.fname << " -> ";
+    int idx = 0;                                // skipping the part < low
+    while(idx < nd.k && nd.keys[idx] < low) {
+      ++idx;
+      if(idx == nd.k) {
+        if(!strcmp(nd.children[idx].fname, "Null")) {
+          idx = 9999;
+          break;
+        }
+        nd = (*nd.children[idx]);
+        idx = 0;
+      }
+    }
+    string data;
+    while(idx < nd.k && nd.keys[idx] <= high) {
+      ifstream fin(nd.children[idx].fname);
+      fin >> data; fin.close();
+      cout << "(" << nd.keys[idx] << "," << data << ") ";
+      ++idx;
+      if(idx == nd.k) {
+        if(!strcmp(nd.children[idx].fname, "Null")) break;
+        nd = *(nd.children[idx]);
+        //cerr << nd.This.fname << " -> ";
+        idx = 0;
+      }
+    }
+    cout << "\n";
+    
   }
   void print() {
     cerr << "starting with root:\n";

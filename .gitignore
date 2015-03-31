@@ -1,6 +1,7 @@
-# Ignore a.out
+# Ignore .out, .o and hidden files
 *.out
 *.o
+.*
 
 # Ignore nodes created in nodes/
 nodes/*
@@ -11,3 +12,4 @@ hierarchical.pdf
 memory.pdf
 in
 bplustree.config.bkp
+out

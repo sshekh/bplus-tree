@@ -8,6 +8,7 @@
 #include <memory>
 #include <cstdio>
 #include <algorithm>
+#include <cstring>
 using namespace std;
 
 int MAXK;
@@ -18,7 +19,7 @@ int MAXK;
 struct nptr {
   char fname[15];
   static int cnt;
-  nptr() {}
+  nptr() { strcpy(fname, "Null"); }
   void open() {
     sprintf(fname, "nodes/%.4d", cnt);
     ++cnt;
@@ -33,9 +34,8 @@ struct node {
   bool isLeaf;
   int k;
   nptr This;    // file for itself
-  node(const nptr s) : isLeaf(false), This(s), k(0) { load(); }
+  node(const nptr s) : isLeaf(false), This(s), k(0) { }
   node() : isLeaf(false), k(0) {}
-  void clear() {k = 0; keys.clear(); children.clear();}
   void load() {
     ifstream fin(This.fname);
     fin >> k >> isLeaf;
@@ -45,7 +45,6 @@ struct node {
   }
   void dump() {
     ofstream fout(This.fname);
-    cerr << "Unloading in " << This.fname << "\n";
     fout << k << " " << isLeaf << "\n";
     for(int i = 0; i < k; ++i) fout << keys[i] << " "; fout << "\n";
     for(int i = 0; i < k + 1; ++i) fout << children[i].fname << " "; fout << "\n";

@@ -18,6 +18,8 @@ node.o: node.hpp
 clean: fresh
 	rm *.o main
 
+# Clean all the data tree has
 fresh: 
 	rm -rf nodes/*
 	cp bplustree.config.bkp bplustree.config
+	> inserted
