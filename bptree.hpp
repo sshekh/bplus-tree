@@ -42,13 +42,9 @@ struct Bptree {
     if(nptr::cnt == 0) return;
     node nd = *root;
     while(!nd.isLeaf) {
-      //cerr << "low = " << low << " ";
-      int idx = lower_bound(nd.keys.begin(), nd.keys.end(), low + EPS) - nd.keys.begin();
-      //cerr << nd.This.fname << " " << idx << " -> ";
-      nd = *nd.children[idx + 1];
-      //cerr << "\n";
+      int idx = upper_bound(nd.keys.begin(), nd.keys.end(), low + EPS) - nd.keys.begin();
+      nd = *nd.children[idx];
     }
-    //cerr << nd.This.fname << " -> ";
     int idx = 0;                                // skipping the part < low
     while(idx < nd.k && nd.keys[idx] < low) {
       ++idx;
@@ -70,7 +66,6 @@ struct Bptree {
       if(idx == nd.k) {
         if(!strcmp(nd.children[idx].fname, "Null")) break;
         nd = *(nd.children[idx]);
-        //cerr << nd.This.fname << " -> ";
         idx = 0;
       }
     }
