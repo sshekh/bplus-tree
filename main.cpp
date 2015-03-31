@@ -1,5 +1,5 @@
 #include "node.hpp"
-#include "Bptree.hpp"
+#include "bptree.hpp"
 #include <iostream>
 #include <cstdio>
 using namespace std;
@@ -11,7 +11,7 @@ int main() {
   for(int i = 0; i < nd.k; ++i) {
     nd.keys[i] += 1;
   }
-  nd.unload();
+  nd.dump();
   file = &nd;
   nd = *file;
   nd.load();
