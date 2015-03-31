@@ -3,20 +3,21 @@ CFLAGS=-Wall -c
 DEBUG=-g
 
 # Call the build routine
-all: tree.out
-
-# Start fresh
-fresh: clean-files tree.out
+all: main
 
 # Build the tree
-tree.out: bptree.o
-	$(CC) bptree.o -o tree.out
+main: bptree.o main.cpp
+	$(CC) $(DEBUG) main.cpp -o main
 
-bptree.o: bptree.hpp node.hpp
-	$(CC) $(CFLAGS) bptree.hpp node.hpp
+bptree.o: bptree.hpp node.o
+	$(CC) $(DEBUG) bptree.hpp -o bptree.o
 
-setup-files: clean-files
-	rm *.o *.out
+node.o: node.hpp
+	$(CC) $(DEBUG) node.hpp -o node.o
 
-clean-files: 
+clean: fresh
+	rm *.o main
+
+fresh: 
 	rm -rf nodes/*
+	cp bplustree.config.bkp bplustree.config

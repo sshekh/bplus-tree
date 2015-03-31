@@ -7,4 +7,7 @@ nodes/*
 
 #Ignore the help file
 bpthelp.cpp
-
+hierarchical.pdf
+memory.pdf
+in
+bplustree.config.bkp
