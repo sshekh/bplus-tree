@@ -7,5 +7,7 @@ struct Bptree {
     fin >> MAXK;
   }
   nptr root;
-
+  void insert(double key, string data) {
+    auto kn = root->insert(key);
+  }
 };

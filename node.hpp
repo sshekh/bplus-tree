@@ -1,3 +1,6 @@
+#ifndef NODE_H
+#define NODE_H
+
 #include <vector>
 #include <string>
 #include <fstream>
@@ -5,15 +8,12 @@
 #include <memory>
 #include <cstdio>
 using namespace std;
+
+int MAXK;
+
 /* Node for the B+ tree
  * Nptr is pointer to node
  */
-
-
-#ifndef NODE_H
-#define NODE_H
-int MAXK;
-
 struct nptr {
   char fname[15];
   static int cnt;
@@ -29,24 +29,26 @@ int nptr::cnt = 0;
 struct node {
   vector<double> keys;
   vector<nptr> children;
-  int nk;
+  int k;
   bool isLeaf;
   nptr This;    // file for itself
-  node(const nptr s) : isLeaf(false), nk(0), This(s) {}
-  node() : isLeaf(false), nk(0) {}
+  node(const nptr s) : isLeaf(false), k(0), This(s) {}
+  node() : isLeaf(false), k(0) {}
   void load() {
     ifstream fin(This.fname);
-    fin >> nk >> isLeaf;
-    keys.resize(nk); children.resize(nk);
-    for(int i = 0; i < nk; ++i) fin >> keys[i]; 
-    for(int i = 0; i < nk + 1; ++i) fin >> children[i].fname;
+    fin >> k >> isLeaf;
+    keys.resize(k); children.resize(k);
+    for(int i = 0; i < k; ++i) fin >> keys[i]; 
+    for(int i = 0; i < k + 1; ++i) fin >> children[i].fname;
   }
   void unload() {
     ofstream fout(This.fname);
-    fout << nk << " " << isLeaf << "\n";
-    for(int i = 0; i < nk; ++i) fout << keys[i] << " "; fout << "\n";
-    for(int i = 0; i < nk + 1; ++i) fout << children[i].fname << " "; fout << "\n";
+    fout << k << " " << isLeaf << "\n";
+    for(int i = 0; i < k; ++i) fout << keys[i] << " "; fout << "\n";
+    for(int i = 0; i < k + 1; ++i) fout << children[i].fname << " "; fout << "\n";
   }
+  // Returns the key and pointer of the new child created of nd
+  pair<double, nptr> insert(double key);
 };
 
 node operator*(const nptr s) {
@@ -57,5 +59,9 @@ node operator*(const nptr s) {
 
 nptr operator&(const node nd) {
   return nd.This;
+}
+
+pair<double, nptr> node::insert(double key) {  
+  
 }
 #endif
