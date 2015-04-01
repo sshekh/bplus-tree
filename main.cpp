@@ -7,16 +7,12 @@ using namespace std;
 
 int main() {
   Bptree tree;
-  //tree.insert(0.56, "hello");
-  //tree.insert(0.99, "world");
-  int q, type;
-  cin >> q;
+  int type;
   ofstream fout;
   fout.open("inserted", ios::out | ios::app);
   double key, range; 
   string data;
-  while(q--) {
-    cin >> type;
+  while(cin >> type) {
     switch(type) {
       case 0 :
         cin >> key >> data;
@@ -25,10 +21,12 @@ int main() {
         break;
       case 1 :
         cin >> key;
+        cout << "searching " << key << "\n";
         tree.query(key, key);
         break;
       case 2:
         cin >> key >> range;
+        cout << "ranging " << key - range << " " << key + range << "\n";
         tree.query(key - range, key + range);
         break;
       case 4 :
