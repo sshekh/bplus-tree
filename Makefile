@@ -21,5 +21,5 @@ clean: fresh
 # Clean all the data tree has
 fresh: 
 	rm -rf nodes/*
-	cp bplustree.config.bkp bplustree.config
 	> inserted
+	echo 0 > tree.config 

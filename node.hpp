@@ -95,10 +95,10 @@ pair<double, nptr> node::insert(double key, nptr keyf) {
     dump();
     return make_pair(newk, newsib);
   } else {
-    int idx = lower_bound(keys.begin(), keys.end(), key) - keys.begin();
+    int idx = upper_bound(keys.begin(), keys.end(), key) - keys.begin();
     auto newc = (*children[idx]).insert(key, keyf);   // newc.first is the starting key, newc.second is the node with >= newc.first
     if(newc.first == -1) return newc;   // no new child created
-    idx = lower_bound(keys.begin(), keys.end(), newc.first) - keys.begin();
+    idx = upper_bound(keys.begin(), keys.end(), newc.first) - keys.begin();
     keys.insert(idx + keys.begin(), newc.first); ++k;
     children.insert(idx + 1 + children.begin(), newc.second);
     double newk = -1;
@@ -128,7 +128,7 @@ void rprint(node nd) {
         cerr << nd.children[i].fname << " (" << nd.keys[i] << "," << data << ")" << " ";
         fin.close();
       }
-      cerr << "\n";
+      cerr << " -> " << nd.children[nd.keys.size()].fname <<"\n";
     } else {
       nd.print();
       for(nptr childp : nd.children) rprint(*childp);

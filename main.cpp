@@ -17,17 +17,28 @@ int main() {
   string data;
   while(q--) {
     cin >> type;
-    if(type == 0) {
-      cin >> key >> data;
-      tree.insert(key, data);
-      fout << key << " " << data << "\n";
-    } else if(type == 2) {
-      cin >> key >> range;
-      tree.query(key - range, key + range);
-    } else if(type == 4) {
-       cin >> key >> key; 
-    } else if(type == 5) {
+    switch(type) {
+      case 0 :
+        cin >> key >> data;
+        tree.insert(key, data);
+        fout << key << " " << data << "\n";
+        break;
+      case 1 :
+        cin >> key;
+        tree.query(key, key);
+        break;
+      case 2:
+        cin >> key >> range;
+        tree.query(key - range, key + range);
+        break;
+      case 4 :
+        cin >> key >> key;    // do nothing
+        break;
+      case 5:
         tree.print();
+        break;
+      default:
+        cerr << "Wrong type!!!!!\n";
     }
   }
   fout.close();

@@ -7,12 +7,16 @@ const double EPS = 1e-11;
 struct Bptree {
   Bptree() {
     ifstream fin("bplustree.config");
-    fin >> MAXK >> nptr::cnt;
+    fin >> MAXK; fin.close();
+    fin.open("tree.config", ios::in);
+    fin >> nptr::cnt;
     if(nptr::cnt != 0) fin >> root.fname;
+    fin.close();
   }
   ~Bptree() {
-    ofstream fout("bplustree.config");
-    fout << MAXK << " " << nptr::cnt << " " << root.fname << "\n";
+    ofstream fout("tree.config");
+    fout << nptr::cnt << " " << root.fname << "\n";
+    fout.close();
   }
   nptr root;
   void insert(double key, string data) {
@@ -41,11 +45,12 @@ struct Bptree {
   void query(double low, double high) {   // print all values x low <= x <= high
     if(nptr::cnt == 0) return;
     node nd = *root;
+    int idx, idxe;
     while(!nd.isLeaf) {
-      int idx = upper_bound(nd.keys.begin(), nd.keys.end(), low + EPS) - nd.keys.begin();
+      idx = lower_bound(nd.keys.begin(), nd.keys.end(), low) - nd.keys.begin();
       nd = *nd.children[idx];
     }
-    int idx = 0;                                // skipping the part < low
+    idx = 0;                                // skipping the part < low
     while(idx < nd.k && nd.keys[idx] < low) {
       ++idx;
       if(idx == nd.k) {
