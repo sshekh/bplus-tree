@@ -9,25 +9,35 @@ int main() {
   Bptree tree;
   int type;
   ofstream fout;
-  fout.open("inserted", ios::out | ios::app);
+  fout.open("res.out", ios::out);
   double key, range; 
   string data;
+  clock_t start, end;
   while(cin >> type) {
     switch(type) {
       case 0 :
         cin >> key >> data;
+        start = clock();
         tree.insert(key, data);
-        fout << key << " " << data << "\n";
+        end = clock();
+        fout << type << " " << (end - start) << "\n";
+        //fout << key << " " << data << "\n";
         break;
       case 1 :
         cin >> key;
-        cout << "searching " << key << "\n";
+        //cout << "searching " << key << "\n";
+        start = clock();
         tree.query(key, key);
+        end = clock();
+        fout << type << " " << (end - start) << "\n";
         break;
       case 2:
         cin >> key >> range;
-        cout << "ranging " << key - range << " " << key + range << "\n";
+        //cout << "ranging " << key - range << " " << key + range << "\n";
+        start = clock(); 
         tree.query(key - range, key + range);
+        end = clock();
+        fout << type << " " << (end - start) << "\n";
         break;
       case 4 :
         cin >> key >> key;    // do nothing

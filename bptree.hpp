@@ -63,12 +63,10 @@ struct Bptree {
       }
     }
     string data;
-    int cnt = 0;
     while(idx < nd.k && nd.keys[idx] <= high) {
       ifstream fin(nd.children[idx].fname);
       fin >> data; fin.close();
       //cout << nd.keys[idx] << "," << data << " ";
-      ++cnt;
       ++idx;
       if(idx == nd.k) {
         if(!strcmp(nd.children[idx].fname, "Null")) break;
@@ -76,7 +74,7 @@ struct Bptree {
         idx = 0;
       }
     }
-    cout << cnt << "\n";
+    //cout << "\n";
     
   }
   void print() {
