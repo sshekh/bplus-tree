@@ -35,7 +35,6 @@ int main() {
         break;
       case 1 :
         cin >> key;
-        //cout << "searching " << key << "\n";
         fstart = tree.now();
         start = Clock::now();
 
@@ -47,12 +46,11 @@ int main() {
         break;
       case 2:
         cin >> key >> range;
-        //cout << "ranging " << key - range << " " << key + range << "\n";
         fstart = tree.now();
         start = Clock::now();
 
         tree.query(key - range, key + range);
-        
+
         end = Clock::now();
         fend = tree.now();
         fout << type << " " << duration_cast<microseconds>(end - start).count() << " " << fend - fstart << "\n";

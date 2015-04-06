@@ -2,7 +2,7 @@
 #include <utility>
 #include <cstring>
 
-const double EPS = 1e-11;
+const double EPS = 1e-10;
 
 struct Bptree {
   Bptree() {
@@ -48,14 +48,15 @@ struct Bptree {
   }
   void query(double low, double high) {   // print all values x low <= x <= high
     if(nptr::cnt == 0) return;
+    vector<double> ret;
     node nd = *root;
     int idx, idxe;
     while(!nd.isLeaf) {
-      idx = lower_bound(nd.keys.begin(), nd.keys.end(), low) - nd.keys.begin();
+      idx = lower_bound(nd.keys.begin(), nd.keys.end(), low - EPS) - nd.keys.begin();
       nd = *nd.children[idx];
     }
     idx = 0;                                // skipping the part < low
-    while(idx < nd.k && nd.keys[idx] < low) {
+    while(idx < nd.k && nd.keys[idx] < low - EPS) {
       ++idx;
       if(idx == nd.k) {
         if(!strcmp(nd.children[idx].fname, "Null")) {
@@ -67,7 +68,7 @@ struct Bptree {
       }
     }
     string data;
-    while(idx < nd.k && nd.keys[idx] <= high) {
+    while(idx < nd.k && nd.keys[idx] <= high + EPS) {
       ifstream fin(nd.children[idx].fname); ++fcnt;
       fin >> data; fin.close();
       cout << nd.keys[idx] << " ";
@@ -79,7 +80,6 @@ struct Bptree {
       }
     }
     cout << "\n";
-    
   }
   void print() {
     cerr << "starting with root:\n";
