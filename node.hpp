@@ -12,7 +12,7 @@
 using namespace std;
 
 int MAXK;
-unsigned fcnt = 0;
+unsigned fcnt = 0;  // stores the total number of file accesses made
 
 /* Node for the B+ tree
  * Nptr is pointer to node
@@ -34,7 +34,6 @@ struct node {
   vector<nptr> children;
   bool isLeaf;
   int k;
-  static unsigned cnt;    // stores the total number of file accesses made
   nptr This;    // file for itself
   node(const nptr s) : isLeaf(false), This(s), k(0) { }
   node() : isLeaf(false), k(0) {}

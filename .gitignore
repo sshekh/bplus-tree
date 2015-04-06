@@ -1,5 +1,4 @@
 # Ignore .out, .o and hidden files
-*.out
 *.o
 .*
 
