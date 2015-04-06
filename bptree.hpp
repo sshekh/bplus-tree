@@ -10,18 +10,22 @@ struct Bptree {
     fin >> MAXK; fin.close();
     fin.open("tree.config", ios::in);
     fin >> nptr::cnt;
-    if(nptr::cnt != 0) fin >> root.fname;
+    if(nptr::cnt != 0) fin >> root.fname >> fcnt;
+    ++fcnt;
     fin.close();
   }
   ~Bptree() {
-    ofstream fout("tree.config");
-    fout << nptr::cnt << " " << root.fname << "\n";
+    ofstream fout("tree.config"); ++fcnt;
+    fout << nptr::cnt << " " << root.fname << " " << fcnt << "\n";
     fout.close();
   }
   nptr root;
+  unsigned now() {    // get the total number of file accesses till now
+    return fcnt;
+  }
   void insert(double key, string data) {
     nptr dataf; dataf.open();
-    ofstream fout(dataf.fname);
+    ofstream fout(dataf.fname); ++fcnt;
     fout << data;
     fout.close();
     if(nptr::cnt == 1) {  // tree not created yet, (one node created for data)
@@ -66,7 +70,7 @@ struct Bptree {
     while(idx < nd.k && nd.keys[idx] <= high) {
       ifstream fin(nd.children[idx].fname);
       fin >> data; fin.close();
-      //cout << nd.keys[idx] << "," << data << " ";
+      cout << nd.keys[idx] << " ";
       ++idx;
       if(idx == nd.k) {
         if(!strcmp(nd.children[idx].fname, "Null")) break;
@@ -74,7 +78,7 @@ struct Bptree {
         idx = 0;
       }
     }
-    //cout << "\n";
+    cout << "\n";
     
   }
   void print() {
