@@ -7,6 +7,8 @@
 using namespace std;
 
 typedef std::chrono::high_resolution_clock Clock;
+using chrono::duration_cast;
+using chrono::microseconds;
 
 int main() {
   Bptree tree;
@@ -16,7 +18,6 @@ int main() {
   double key, range; 
   string data;
   chrono::time_point<Clock> start, end;
-  chrono::duration<double> diff;
   unsigned fstart, fend;
   while(cin >> type) {
     switch(type) {
@@ -29,8 +30,7 @@ int main() {
         
         end = Clock::now();
         fend = tree.now();
-        diff = end - start;
-        fout << type << " " << diff.count() << " " << fend - fstart << "\n";
+        fout << type << " " << duration_cast<microseconds>(end - start).count() << " " << fend - fstart << "\n";
         //fout << key << " " << data << "\n";
         break;
       case 1 :
@@ -43,8 +43,7 @@ int main() {
         
         end = Clock::now();
         fend = tree.now();
-        diff = end - start;
-        fout << type << " " << diff.count() << " " << fend - fstart << "\n";
+        fout << type << " " << duration_cast<microseconds>(end - start).count() << " " << fend - fstart << "\n";
         break;
       case 2:
         cin >> key >> range;
@@ -56,8 +55,7 @@ int main() {
         
         end = Clock::now();
         fend = tree.now();
-        diff = end - start;
-        fout << type << " " << diff.count() << " " << fend - fstart << "\n";
+        fout << type << " " << duration_cast<microseconds>(end - start).count() << " " << fend - fstart << "\n";
         break;
       case 4 :
         cin >> key >> key;    // do nothing
