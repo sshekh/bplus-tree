@@ -19,6 +19,14 @@ int main() {
   string data;
   chrono::time_point<Clock> start, end;
   unsigned fstart, fend;
+  if(nptr::cnt == 0) {    // tree empty, points to be injected from assgn2_bplus_data.txt
+    ifstream fin("assgn2_bplus_data.txt");
+    while(fin >> key) {
+      fin >> data;
+      tree.insert(key, data);
+    }
+    fin.close();
+  }
   while(cin >> type) {
     switch(type) {
       case 0 :
@@ -31,7 +39,6 @@ int main() {
         end = Clock::now();
         fend = tree.now();
         fout << type << " " << duration_cast<microseconds>(end - start).count() << " " << fend - fstart << "\n";
-        //fout << key << " " << data << "\n";
         break;
       case 1 :
         cin >> key;
@@ -43,6 +50,7 @@ int main() {
         end = Clock::now();
         fend = tree.now();
         fout << type << " " << duration_cast<microseconds>(end - start).count() << " " << fend - fstart << "\n";
+        for(auto kd : tree.result) cout << kd.first << ":" << kd.second << " "; cout << "\n";
         break;
       case 2:
         cin >> key >> range;
@@ -54,6 +62,7 @@ int main() {
         end = Clock::now();
         fend = tree.now();
         fout << type << " " << duration_cast<microseconds>(end - start).count() << " " << fend - fstart << "\n";
+        for(auto kd : tree.result) cout << kd.first << ":" << kd.second << " "; cout << "\n";
         break;
       case 4 :
         cin >> key >> key;    // do nothing

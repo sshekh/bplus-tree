@@ -20,6 +20,7 @@ struct Bptree {
     fout.close();
   }
   nptr root;
+  vector< pair<double, string> > result;
   unsigned now() {    // get the total number of file accesses till now
     return fcnt;
   }
@@ -48,7 +49,7 @@ struct Bptree {
   }
   void query(double low, double high) {   // print all values x low <= x <= high
     if(nptr::cnt == 0) return;
-    vector<double> ret;
+    result.clear();
     node nd = *root;
     int idx, idxe;
     while(!nd.isLeaf) {
@@ -71,7 +72,8 @@ struct Bptree {
     while(idx < nd.k && nd.keys[idx] <= high + EPS) {
       ifstream fin(nd.children[idx].fname); ++fcnt;
       fin >> data; fin.close();
-      cout << nd.keys[idx] << " ";
+      //cout << nd.keys[idx] << ":" << data << " ";
+      result.push_back(make_pair(nd.keys[idx], data));
       ++idx;
       if(idx == nd.k) {
         if(!strcmp(nd.children[idx].fname, "Null")) break;
@@ -79,7 +81,7 @@ struct Bptree {
         idx = 0;
       }
     }
-    cout << "\n";
+    //cout << "\n";
   }
   void print() {
     cerr << "starting with root:\n";

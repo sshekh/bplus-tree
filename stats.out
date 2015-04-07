@@ -1,21 +1,21 @@
 Insertion
 Stats for Running time (in microseconds)
-Maximum  4532357
-Minimum  93
-Average  308.576049505
-Standard Deviation 18126.799957
+Maximum  419
+Minimum  123
+Average  166.868
+Standard Deviation 38.4214077826
 Stats for File Access
-Maximum  12
-Minimum  2
-Average  5.89836633663
-Standard Deviation 0.608241503995
+Maximum  10
+Minimum  6
+Average  6.108
+Standard Deviation 0.494303550463
 
 Point Query
 Stats for Running time (in microseconds)
-Maximum  237
-Minimum  60
-Average  83.608
-Standard Deviation 17.4031702859
+Maximum  239
+Minimum  62
+Average  87.883
+Standard Deviation 19.604624735
 Stats for File Access
 Maximum  8
 Minimum  4
@@ -24,10 +24,10 @@ Standard Deviation 0.759765753374
 
 Range Query
 Stats for Running time (in microseconds)
-Maximum  230700
-Minimum  70
-Average  1504.83
-Standard Deviation 10062.0452689
+Maximum  543117
+Minimum  71
+Average  1512.84
+Standard Deviation 17144.0707807
 Stats for File Access
 Maximum  248
 Minimum  4
